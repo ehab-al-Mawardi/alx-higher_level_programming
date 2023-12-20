@@ -1,111 +1,103 @@
 #!/usr/bin/python3
 """
-Module name: square_module
-
-This module defines a class named Square
-
-Class:
-    Square: defines a square
-
-Attributes:
-    Size : The size of the square
-
-Usage:
-    n_square = Square()
-
+    Coordinates of a square
 """
 
 
 class Square:
     """
-    This is a class named square that defines size
-
-    Attributes:
-        ___size: the size of the square
-
+         a class Square that defines a square by: (based on 5-square.py)
     """
-    def __init__(self, size=0):
+    def __init__(self, size=0, position=(0, 0)):
         """
-        Initialize a new instance of a square class
-
-        Args:
-            size (int): the size of the square
-
-        Raises:
-            TypeError: if size is not int
-            ValueError: if value negative
-
-        Returns:
-            None
-    """
-        if not isinstance(size, int):
-
-            raise TypeError("size must be a number")
-        if size < 0:
-            raise ValueError("size must be >= 0")
-
+            Instantiation with optional size and optional position
+        """
+        if type(position) is not tuple or len(position) != 2 or not\
+                all(isinstance(i, int) and i >= 0 for i in position):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        if type(size) is not int:
+            print("size must be an integer", end="")
+            raise TypeError
+        elif size < 0:
+            print("size must be >= 0", end="")
+            raise ValueError
         else:
             self.__size = size
-
-    def area(self):
-
-        """
-        calculates the area of a current square
-
-        Retunrs:
-            the current square area
-        """
-        return self.__size ** 2
+            self.__position = position
 
     @property
     def size(self):
         """
-        gets the size object
-
-        Returns:
-            the size object
+            getter size
         """
         return self.__size
 
     @size.setter
     def size(self, value):
         """
-        sets the size of a square
+            setter size
         """
-        if not isinstance(value, int):
-            raise TypeError("size must be a number")
-        if value < 0:
-            raise ValueError("size must be >= 0")
-
+        if type(value) is not int:
+            print("size must be an integer", end="")
+            raise TypeError
+        elif value < 0:
+            print("size must be >= 0", end="")
+            raise ValueError
         else:
             self.__size = value
 
-    def __eq__(self, other):
-        if isinstance(other, Square):
-            return self.area() == other.area()
-        return NoImplemented
+    @property
+    def position(self):
+        """
+            getter position
+        """
+        return self.__position
 
-    def __ne__(self, other):
-        if isinstance(other, Square):
-            return self.area() != other.area()
-        return NoImplemented
+    @position.setter
+    def position(self, value):
+        """
+            getter position
+        """
+        if type(value) is not tuple or len(value) != 2 or not\
+                all(isinstance(i, int) and i > 0 for i in value):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        else:
+            self.__position = value
 
-    def __lt__(self, other):
-        if isinstance(other, Square):
-            return self.area() < other.area()
-        return NoImplemented
+    def area(self):
+        """
+            The current square area
+        """
+        return self.__size ** 2
 
-    def __le__(self, other):
-        if isinstance(other, Square):
-            return self.area() <= other.area()
-        return NoImplemented
+    def my_print(self):
+        """
+            Prints the square
+        """
+        if self.__size == 0:
+            print()
+        else:
+            for L in range(self.__position[1]):
+                print()
+            for i in range(self.__size):
+                for k in range(self.__position[0]):
+                    print(" ", end="")
+                for j in range(self.__size):
+                    print("#", end="")
+                print()
 
-    def __gt__(self, other):
-        if isinstance(other, Square):
-            return self.area() > other.area()
-        return NoImplemented
-
-    def __ge__(self, other):
-        if isinstance(other, Square):
-            return self.area() >= other.area()
-        return NoImplemented
+    def __str__(self):
+        """
+            same as my_print
+        """
+        size = self.__size
+        position = self.__position
+        result = ""
+        if size != 0:
+            [print("") for i in range(position[1])]
+        for i in range(size):
+            [print(" ", end="") for j in range(0, position[0])]
+            [print("#", end="") for k in range(0, size)]
+            if i != size - 1:
+                print("")
+        return ("")
